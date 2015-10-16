@@ -1,4 +1,4 @@
-
+package edu.sjsu.fwjs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,26 +76,38 @@ class BinOpExpr implements Expression {
         // YOUR CODE HERE
     	IntVal theVal1 = (IntVal) e1.evaluate(env);
 		IntVal theVal2 = (IntVal) e2.evaluate(env); 
+		Value theret = new IntVal(0);
 		
     	if(op == Op.ADD)
-    		return new IntVal(theVal1.toInt() + theVal2.toInt());
-    	
+    	{
+    		theret = new IntVal(theVal1.toInt() + theVal2.toInt());
+    	}
     	else if(op == Op.SUBTRACT)
-    		return new IntVal(theVal1.toInt() - theVal2.toInt());
+    	{
+    		theret = new IntVal(theVal1.toInt() - theVal2.toInt());
+    	}
     		
     	else if(op == Op.MULTIPLY)
-    		return new IntVal(theVal1.toInt() * theVal2.toInt());
+    	{
+    		theret = new IntVal(theVal1.toInt() * theVal2.toInt());
+    	}
     	
     	else if(op == Op.DIVIDE)
-    		return new IntVal(theVal1.toInt() / theVal2.toInt());
+    	{
+    		theret = new IntVal(theVal1.toInt() / theVal2.toInt());
+    	}
     	
     	else if(op == Op.MOD)
-    		return new IntVal(theVal1.toInt() % theVal2.toInt());
+    	{
+    		theret = new IntVal(theVal1.toInt() % theVal2.toInt());
+    	}
     	
     	else if(op == Op.EQ)
-    		return new BoolVal(theVal1.toInt() == theVal2.toInt());
-    	
-        return null;
+    	{
+    		theret = new BoolVal(theVal1.toInt() == theVal2.toInt());
+    	}
+    	env.updateVar(theret.toString(), theret);
+    	return theret;
     }
 }
 
@@ -115,15 +127,20 @@ class IfExpr implements Expression {
     public Value evaluate(Environment env) 
     {
         BoolVal thebool = (BoolVal) cond.evaluate(env);
+        env.updateVar(thebool.toString(), thebool);
+        
     	if(thebool.toBoolean())
         {
-        	return thn.evaluate(env);
+        	Value theret = thn.evaluate(env);
+        	env.updateVar(theret.toString(), theret);
+        	return theret;
         }
     	else
     	{
-    		return els.evaluate(env);
+    		Value theret = els.evaluate(env);
+        	env.updateVar(theret.toString(), theret);
+        	return theret;
     	}
-        //return null; not necessary
     }
 }
 
@@ -139,11 +156,12 @@ class WhileExpr implements Expression {
     }
     public Value evaluate(Environment env) 
     {
-        Value theval = new BoolVal(false);
+        Value theval = new BoolVal(false); //initiate the Value object that we return
         
     	while(((BoolVal) cond.evaluate(env)).toBoolean())
         {
         	theval = body.evaluate(env);
+        	env.updateVar(theval.toString(), theval);
         }
         return theval;
     }
@@ -161,7 +179,18 @@ class SeqExpr implements Expression {
     }
     public Value evaluate(Environment env) 
     {
-        e1.evaluate(env);
+        Value theval = e1.evaluate(env);
+        
+        //NOT SURE IF THIS IS THE RIGHT IDEA
+        //DO WE NEED TO CHECK FOR ALL POSSIBLE TYPES? (INCLUDING CLOSURE AND STUFF BESIDES INT AND BOOLEAN?)
+        if(theval instanceof BoolVal)
+        {
+        	env.updateVar(((BoolVal) theval).toString(), theval);
+        }
+        else if(theval instanceof IntVal)
+        {
+        	env.updateVar(((IntVal) theval).toString(), theval);
+        }
         e2.evaluate(env);
         return null;
     }
@@ -197,6 +226,7 @@ class AssignExpr implements Expression {
         this.varName = varName;
         this.e = e;
     }
+    
     public Value evaluate(Environment env) 
     {
         Value theVal = e.evaluate(env);
@@ -215,8 +245,10 @@ class FunctionDeclExpr implements Expression {
         this.params = params;
         this.body = body;
     }
+    //DOUBLE CHECK THIS PART
     public Value evaluate(Environment env) {
-        // YOUR CODE HERE
+        ClosureVal theval = new ClosureVal(params, body, env);
+        env.updateVar(theval.toString(), theval);
         return null;
     }
 }
@@ -231,6 +263,7 @@ class FunctionAppExpr implements Expression {
         this.f = f;
         this.args = args;
     }
+    //DON'T UNDERSTAND THIS PART, HOW DO WE APPLY ARGUMENTS?
     public Value evaluate(Environment env) {
         // YOUR CODE HERE
         return null;

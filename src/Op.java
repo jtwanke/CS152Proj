@@ -1,4 +1,4 @@
-
+package edu.sjsu.fwjs;
 
 /**
  * FWJS binary operators.
