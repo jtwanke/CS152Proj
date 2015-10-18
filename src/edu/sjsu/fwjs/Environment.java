@@ -36,8 +36,9 @@ public class Environment {
         else if (outerEnv.env.containsKey(varName))
         {
         	return outerEnv.env.get(varName);
+        } else {
+        	return null;
         }
-        return null;
     }
 
     /**

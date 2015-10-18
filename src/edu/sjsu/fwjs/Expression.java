@@ -307,7 +307,7 @@ class FunctionAppExpr implements Expression {
     	}
     	//v.apply(argsVals);
         ClosureVal v = (ClosureVal) f.evaluate(env2);
-        Value retv = v.apply(argsVals);
+        Value retv = v.apply(argsVals); //Getting a null value here
     	return retv;
     }
 }
