@@ -205,13 +205,28 @@ class SeqExpr implements Expression {
         if(theval instanceof BoolVal)
         {
         	env.updateVar(((BoolVal) theval).toString(), theval);
+        	System.out.println(theval.toString());
         }
         else if(theval instanceof IntVal)
         {
         	env.updateVar(((IntVal) theval).toString(), theval);
+        	System.out.println(theval.toString());
         }
-        e2.evaluate(env);
-        return null;
+        
+        else if(theval instanceof ClosureVal)
+        {
+        	env.updateVar(((ClosureVal) theval).toString(), theval);
+        	System.out.println(theval.toString());
+        }
+        
+        else if(theval instanceof NullVal)
+        {
+        	env.updateVar(((NullVal) theval).toString(), theval);
+        	System.out.println(theval.toString());
+        }
+        //Value v = e2.evaluate(env);
+        Value theVal2 = e2.evaluate(env);
+        return theVal2;
     }
 }
 
@@ -229,7 +244,7 @@ class VarDeclExpr implements Expression {
     {
         Value theVal = exp.evaluate(env);
     	env.createVar(varName, theVal);
-        return null;
+        return theVal;
     }
 }
 
@@ -268,7 +283,7 @@ class FunctionDeclExpr implements Expression {
     public Value evaluate(Environment env) {
         ClosureVal theval = new ClosureVal(params, body, env);
         env.updateVar(theval.toString(), theval);
-        return null;
+        return theval;
     }
 }
 
