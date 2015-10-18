@@ -1,4 +1,3 @@
-package edu.sjsu.fwjs;
 
 public class Interpreter {
 
