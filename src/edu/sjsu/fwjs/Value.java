@@ -96,7 +96,7 @@ class ClosureVal implements Value {
     	for(Value v : argVals){
     		locEnv.createVar(v.toString(), v);
     	}
-    	
-        return body.evaluate(locEnv);
+    	Value val = body.evaluate(locEnv);
+        return val;
     }
 }

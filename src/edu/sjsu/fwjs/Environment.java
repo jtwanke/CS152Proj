@@ -33,11 +33,11 @@ public class Environment {
         {
         	return env.get(varName);
         }
-        else
+        else if (outerEnv.env.containsKey(varName))
         {
-        	return outerEnv.resolveVar(varName);
+        	return outerEnv.env.get(varName);
         }
-        //return null;
+        return null;
     }
 
     /**
