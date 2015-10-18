@@ -265,7 +265,7 @@ class AssignExpr implements Expression {
     {
         Value theVal = e.evaluate(env);
     	env.updateVar(varName, theVal);
-        return null;
+        return theVal;
     }
 }
 
@@ -300,7 +300,15 @@ class FunctionAppExpr implements Expression {
     //DON'T UNDERSTAND THIS PART, HOW DO WE APPLY ARGUMENTS?
     public Value evaluate(Environment env) {
         // YOUR CODE HERE
-        return null;
+    	List<Value> argsVals = new ArrayList<Value>();
+    	Environment env2 = new Environment();
+    	for(Expression e : args){
+    		argsVals.add(e.evaluate(env));
+    	}
+    	//v.apply(argsVals);
+        ClosureVal v = (ClosureVal) f.evaluate(env2);
+        Value retv = v.apply(argsVals);
+    	return retv;
     }
 }
 
