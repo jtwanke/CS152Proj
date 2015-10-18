@@ -1,4 +1,4 @@
-
+package edu.sjsu.fwjs;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +105,25 @@ class BinOpExpr implements Expression {
     	else if(op == Op.EQ)
     	{
     		theret = new BoolVal(theVal1.toInt() == theVal2.toInt());
+    	}
+    	
+    	else if(op == Op.GT){
+    		theret = new BoolVal(theVal1.toInt() > theVal2.toInt());
+    	}
+    	
+    	else if(op == Op.GE){
+    		theret = new BoolVal(theVal1.toInt() >= theVal2.toInt());
+    	}
+    	
+    	else if(op == Op.LT){
+    		theret = new BoolVal(theVal1.toInt() < theVal2.toInt());
+    	}
+    	else if(op == Op.LE){
+    		theret = new BoolVal(theVal1.toInt() >= theVal2.toInt());
+    	}
+    	
+    	else if(op == Op.GT){
+    		theret = new BoolVal(theVal1.toInt() > theVal2.toInt());
     	}
     	env.updateVar(theret.toString(), theret);
     	return theret;
