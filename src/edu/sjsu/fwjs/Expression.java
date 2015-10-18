@@ -180,7 +180,7 @@ class WhileExpr implements Expression {
     	while(((BoolVal) cond.evaluate(env)).toBoolean())
         {
         	theval = body.evaluate(env);
-        	env.updateVar(theval.toString(), theval);
+        	//env.updateVar(theval.toString(), theval);
         }
         return theval;
     }
