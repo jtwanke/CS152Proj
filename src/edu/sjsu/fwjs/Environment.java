@@ -33,11 +33,11 @@ public class Environment {
         {
         	return env.get(varName);
         }
-        else if (outerEnv.env.containsKey(varName))
+        else if (outerEnv != null && outerEnv.env.containsKey(varName))
         {
         	return outerEnv.env.get(varName);
         } else {
-        	return null;
+        	return new NullVal();
         }
     }
 
