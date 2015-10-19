@@ -152,7 +152,7 @@ public class ExpressionTest {
                 new VarExpr("x"));
         SeqExpr seq = new SeqExpr(newVar, new FunctionAppExpr(f, new ArrayList<Expression>()));
         Value v = seq.evaluate(env);
-        assertEquals(new IntVal(112358), v);
+		assertEquals(new IntVal(112358), v);
     }
     
     @Test
